@@ -1,3 +1,21 @@
+using BookTracker.Api.Application;
+using BookTracker.Api.Storage;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IBookRepository, InMemoryBookRepository>();
+
+builder.Services.AddScoped<BookService>();
+
+var app = builder.Build();
+
+app.MapGet("/books", async (BookService service) => Results.Ok(await service.GetAllBooks()));
+
+app.Run();
+
+public partial class Program;
+
+/*
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -42,3 +60,4 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+*/
