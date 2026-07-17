@@ -13,3 +13,16 @@ Content-Type: application/json
   "author": "Frank Herbert",
   "year": 1965
 }
+
+### Delete Book
+DELETE {{BookTracker.Api_HostAddress}}/books/1
+
+### Update Book
+PUT {{BookTracker.Api_HostAddress}}/books/1
+Content-Type: application/json
+
+{
+  "title": "Changes",
+  "author": "David Bowie",
+  "year": 1971
+}
