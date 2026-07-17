@@ -3,6 +3,7 @@ using BookTracker.Api.Application.CreateBook;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Storage;
 using Microsoft.EntityFrameworkCore;
+using BookTracker.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
     }
 }
 
+/*
 app.MapGet("/books", async (BookService service) => Results.Ok(await service.GetAllBooks()));
 app.MapGet("/books/{id:int}", async (int id, BookService service) =>
 {
@@ -67,6 +69,8 @@ app.MapPut("/books/{id:int}", async (int id, UpdateBookRequest request, BookServ
 
     return Results.NoContent();
 });
+*/
+app.MapBookEndpoints();
 app.Run();
 
 

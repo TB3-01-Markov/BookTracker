@@ -28,13 +28,21 @@ public static class BookEndpoints
     {
         // move the code for this endpoint from Program.cs to here
         var book = await service.GetBookById(id);
+
+        if (book is null)
+        {
+            return Results.NotFound();
+        }
+
         return Results.Ok(book);
     }
 
     public static async Task<IResult> CreateBook(CreateBookRequest request, BookService service)
     {
         // move the code for this endpoint from Program.cs to here
-        return Results.Ok(service.CreateBook(request));
+        var response = await service.CreateBook(request);
+        return Results.Created($"/books/{response.Id}", response);
+        //return Results.Ok(service.CreateBook(request));
 
     }
 
@@ -53,6 +61,17 @@ public static class BookEndpoints
     public static async Task<IResult> DeleteBook(int id, BookService service)
     {
         // move the code for this endpoint from Program.cs to here
-        return Results.Ok(service.DeleteBook(id));
+        var deleted = await service.DeleteBook(id);
+
+        if (!deleted)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.NoContent();
+        //return Results.Ok(service.DeleteBook(id));
     }
+
+
+
 }

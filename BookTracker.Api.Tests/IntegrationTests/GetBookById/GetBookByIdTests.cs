@@ -1,7 +1,9 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-using BookTracker.Api.Application.GetBookById;
+﻿using BookTracker.Api.Application.GetBookById;
+using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Domain;
+//using QuickPulse.Show;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
 
@@ -42,5 +44,10 @@ public class GetBookByIdTests
     public async Task GetBookByIdReturnsNotFoundWhenBookDoesNotExist()
     {
         // Implementeer deze test
+        var client = factory.CreateClient();
+
+        var response = await client.GetAsync("/books/9999");
+        
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

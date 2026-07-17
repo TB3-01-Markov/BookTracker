@@ -43,5 +43,7 @@ public class DeleteBookTests
         var response = await client.DeleteAsync("/books/9999");
 
         // voeg hier een assert toe die verifiëert dat status code NotFound is.
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

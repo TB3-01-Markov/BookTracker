@@ -45,6 +45,10 @@ public class UpdateBookTests
         Assert.NotNull(book);
         // voeg hier de Asserts toe die de properties van book checken
         // gebruik de literal waarden voor de 'expected' values, bvb 1969, niet request.Year
+        Assert.Equal(1, book.Id);
+        Assert.Equal("Dune Messiah", book.Title);
+        Assert.Equal("Frank Herbert", book.Author);
+        Assert.Equal(1969, book.Year);
     }
 
     [Fact]
