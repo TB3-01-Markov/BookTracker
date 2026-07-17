@@ -4,6 +4,10 @@
 GET {{BookTracker.Api_HostAddress}}/books
 Accept: application/json
 
+### Get Book by Id
+GET {{BookTracker.Api_HostAddress}}/books/1
+###
+GET {{BookTracker.Api_HostAddress}}/books/9999
 ### Create Book
 POST {{BookTracker.Api_HostAddress}}/books
 Content-Type: application/json
@@ -16,7 +20,10 @@ Content-Type: application/json
 
 ### Delete Book
 DELETE {{BookTracker.Api_HostAddress}}/books/1
+###
+DELETE {{BookTracker.Api_HostAddress}}/books/9999
 
+###
 ### Update Book
 PUT {{BookTracker.Api_HostAddress}}/books/1
 Content-Type: application/json
@@ -25,4 +32,13 @@ Content-Type: application/json
   "title": "Changes",
   "author": "David Bowie",
   "year": 1971
+}
+###
+PUT {{BookTracker.Api_HostAddress}}/books/9999
+Content-Type: application/json
+
+{
+  "title": "Unknown Book",
+  "author": "Unknown Author",
+  "year": 2000
 }
