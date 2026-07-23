@@ -3,6 +3,7 @@ using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Application.CreateBook;
 using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
+using BookTracker.Api.Application.DeleteBook; 
 using BookTracker.Api.Domain;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -59,6 +60,7 @@ public static class BookEndpoints
 
     }
     */
+    /*
     public static async Task<IResult> CreateBook(CreateBookRequest request, BookService service)
     {
         try
@@ -71,29 +73,43 @@ public static class BookEndpoints
             return Results.BadRequest(new { error = exception.Message });
         }
     }
-
-    public static async Task<IResult> UpdateBook(int id, UpdateBookRequest request, BookService service)
+    */
+    public static async Task<IResult> CreateBook(CreateBookRequest request, CreateBookCommandHandler handler)
     {
-        var updated = await service.UpdateBook(id, request);
-
-        if (!updated)
+        try
         {
-            return Results.NotFound();
+            var response = await handler.Execute(request);
+            return Results.Created($"/books/{response.Id}", response);
         }
-
+        catch (DomainException exception)
+        {
+            return Results.BadRequest(new { error = exception.Message });
+        }
+    }
+    /*public static async Task<IResult> UpdateBook(int id, UpdateBookRequest request, BookService service){
+        var updated = await service.UpdateBook(id, request);
+        if (!updated) return Results.NotFound();
+        return Results.NoContent();
+    }*/
+    public static async Task<IResult> UpdateBook(int id, UpdateBookRequest request, UpdateBookCommandHandler handler)
+    {
+        var updated = await handler.Execute(id, request);
+        if (!updated) return Results.NotFound();
         return Results.NoContent();
     }
-
-    public static async Task<IResult> DeleteBook(int id, BookService service)
+    /*public static async Task<IResult> DeleteBook(int id, BookService service)
     {
         // move the code for this endpoint from Program.cs to here
         var deleted = await service.DeleteBook(id);
-
-        if (!deleted)
-        {
-            return Results.NotFound();
-        }
-
+        if (!deleted) return Results.NotFound();
+        return Results.NoContent();
+        //return Results.Ok(service.DeleteBook(id));
+    }*/
+    public static async Task<IResult> DeleteBook(int id, DeleteBookCommandHandler handler)
+    {
+        // move the code for this endpoint from Program.cs to here
+        var deleted = await handler.Execute(id);
+        if (!deleted) return Results.NotFound();
         return Results.NoContent();
         //return Results.Ok(service.DeleteBook(id));
     }

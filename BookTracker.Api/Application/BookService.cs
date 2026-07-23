@@ -1,4 +1,5 @@
-﻿//using BookTracker.Api.Application.BookList;
+﻿/*
+//using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Application.CreateBook;
 //using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
@@ -9,6 +10,62 @@ namespace BookTracker.Api.Application;
 
 public class BookService(IBookRepository bookRepository)
 {
+    public async Task<CreateBookResponse> CreateBook(CreateBookRequest request)
+    {
+        var book = new Book
+        {
+            Title = new BookTitle(request.Title),
+            Author = new AuthorName(request.Author),
+            Year = request.Year
+        };
+
+        var savedBook = await bookRepository.AddAsync(book);
+
+        return new CreateBookResponse
+        {
+            Id = savedBook.Id,
+            Title = savedBook.Title.Value,
+            Author = savedBook.Author.Value,
+            Year = savedBook.Year
+        };
+    }
+    public async Task<bool> DeleteBook(int id)
+    {
+        //var BookRepository = new InMemoryBookRepository();
+        return await bookRepository.DeleteAsync(id);
+    }
+
+
+    public async Task<bool> UpdateBook(int id, UpdateBookRequest request)
+    {
+        var book =
+            new Book
+            {
+                Id = id,
+                Title = new BookTitle(request.Title),// ... create value object here,
+                Author = new AuthorName(request.Author), // ... create value object here,
+                Year = request.Year
+            };
+
+        return await bookRepository.UpdateAsync(book);
+
+    }
+}*/
+    /*
+public async Task<bool> UpdateBook(int id, UpdateBookRequest request)
+{
+    var book =
+        new Book
+        {
+            Id = id,
+            Title = request.Title,
+            Author = request.Author,
+            Year = request.Year
+        };
+
+    return await bookRepository.UpdateAsync(book);
+}
+*/
     /*
     public async Task<IReadOnlyList<BookInfo>> GetAllBooks()
     {
@@ -44,61 +101,7 @@ public class BookService(IBookRepository bookRepository)
         };
     }
     */
-    public async Task<CreateBookResponse> CreateBook(CreateBookRequest request)
-    {
-        var book =
-            new Book
-            {
-                Title = new BookTitle(request.Title),
-                Author = new AuthorName(request.Author),
-                Year = request.Year
-            };
 
-        var savedBook = await bookRepository.AddAsync(book);
-
-        return
-            new CreateBookResponse
-            {
-                Id = savedBook.Id,
-                Title = savedBook.Title.Value,
-                Author = savedBook.Author.Value,
-                Year = savedBook.Year
-            };
-    }
-    public async Task<bool> DeleteBook(int id)
-    {
-        //var BookRepository = new InMemoryBookRepository();
-        return await bookRepository.DeleteAsync(id);
-    }
-
-    /*
-    public async Task<bool> UpdateBook(int id, UpdateBookRequest request)
-    {
-        var book =
-            new Book
-            {
-                Id = id,
-                Title = request.Title,
-                Author = request.Author,
-                Year = request.Year
-            };
-
-        return await bookRepository.UpdateAsync(book);
-    }
-    */
-    public async Task<bool> UpdateBook(int id, UpdateBookRequest request)
-    {
-        var book =
-            new Book
-            {
-                Id = id,
-                Title = new BookTitle(request.Title),// ... create value object here,
-                Author = new AuthorName(request.Author), // ... create value object here,
-                Year = request.Year
-            };
-
-        return await bookRepository.UpdateAsync(book);
-    }
     /*
     public async Task<BookDetails?> GetBookById(int id)
     {
@@ -119,4 +122,3 @@ public class BookService(IBookRepository bookRepository)
             };
     }
     */
-}
