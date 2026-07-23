@@ -36,7 +36,7 @@ public static class BookEndpoints
 
         return Results.Ok(book);
     }
-
+    /*
     public static async Task<IResult> CreateBook(CreateBookRequest request, BookService service)
     {
         // move the code for this endpoint from Program.cs to here
@@ -44,6 +44,19 @@ public static class BookEndpoints
         return Results.Created($"/books/{response.Id}", response);
         //return Results.Ok(service.CreateBook(request));
 
+    }
+    */
+    public static async Task<IResult> CreateBook(CreateBookRequest request, BookService service)
+    {
+        try
+        {
+            var response = await service.CreateBook(request);
+            return Results.Created($"/books/{response.Id}", response);
+        }
+        catch (DomainException exception)
+        {
+            return Results.BadRequest(new { error = exception.Message });
+        }
     }
 
     public static async Task<IResult> UpdateBook(int id, UpdateBookRequest request, BookService service)
