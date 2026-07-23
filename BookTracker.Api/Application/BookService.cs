@@ -1,6 +1,6 @@
-﻿using BookTracker.Api.Application.BookList;
+﻿//using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Application.CreateBook;
-using BookTracker.Api.Application.GetBookById;
+//using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Domain;
 using BookTracker.Api.Storage;
@@ -9,6 +9,7 @@ namespace BookTracker.Api.Application;
 
 public class BookService(IBookRepository bookRepository)
 {
+    /*
     public async Task<IReadOnlyList<BookInfo>> GetAllBooks()
     {
         var books = await bookRepository.GetAllAsync();
@@ -22,6 +23,7 @@ public class BookService(IBookRepository bookRepository)
         // return [.. summary];
         return summary.ToList();
     }
+    */
     /*
     public async Task<CreateBookResponse> CreateBook(CreateBookRequest request)
     {
@@ -97,6 +99,7 @@ public class BookService(IBookRepository bookRepository)
 
         return await bookRepository.UpdateAsync(book);
     }
+    /*
     public async Task<BookDetails?> GetBookById(int id)
     {
         var book = await bookRepository.GetByIdAsync(id);
@@ -115,4 +118,5 @@ public class BookService(IBookRepository bookRepository)
                 Year = book.Year
             };
     }
+    */
 }

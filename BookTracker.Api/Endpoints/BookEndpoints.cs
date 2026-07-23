@@ -1,7 +1,10 @@
 ﻿using BookTracker.Api.Application;
+using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Application.CreateBook;
+using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Domain;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BookTracker.Api.Endpoints;
 
@@ -17,25 +20,35 @@ public static class BookEndpoints
         app.MapDelete("/books/{id:int}", DeleteBook);
         return app;
     }
-
+    /*
     public static async Task<IResult> GetAllBooks(BookService service)
     {
         var books = await service.GetAllBooks();
         return Results.Ok(books);
     }
-
+    */
+    public static async Task<IResult> GetAllBooks(GetBookListQuery query)
+    {
+        var books = await query.Execute();
+        return Results.Ok(books);
+    }
+    /*
     public static async Task<IResult> GetBookById(int id, BookService service)
     {
         // move the code for this endpoint from Program.cs to here
         var book = await service.GetBookById(id);
-
-        if (book is null)
-        {
-            return Results.NotFound();
-        }
-
+        if (book is null) return Results.NotFound();
         return Results.Ok(book);
     }
+    */
+    public static async Task<IResult> GetBookById(int id, GetBookByIdQuery query)
+    {
+        // move the code for this endpoint from Program.cs to here
+        var book = await query.Execute(id);
+        if (book is null) return Results.NotFound();
+        return Results.Ok(book);
+    }
+
     /*
     public static async Task<IResult> CreateBook(CreateBookRequest request, BookService service)
     {

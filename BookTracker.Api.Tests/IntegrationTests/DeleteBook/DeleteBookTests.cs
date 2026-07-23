@@ -16,8 +16,7 @@ public class DeleteBookTests
         {
             db.Books.Add(
                 new Book
-                {
-                    
+                {   
                     Title = new BookTitle("Dune"),
                     Author = new AuthorName("Frank Herbert"),
                     Year = 1965
