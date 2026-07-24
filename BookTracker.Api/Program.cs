@@ -5,6 +5,7 @@ using BookTracker.Api.Application.DeleteBook;
 using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Endpoints;
+using BookTracker.Api.Seeding;
 using BookTracker.Api.Storage;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IBookRepository, EfBookRepository>();
 
 var app = builder.Build();
-
+/*
 if (app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
@@ -39,7 +40,17 @@ if (app.Environment.IsDevelopment())
         scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
     }
 }
+*/
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.EnsureCreated();
 
+        if (builder.Configuration.GetValue<bool>("SeedDatabase")) DatabaseSeeder.SeedBooks(dbContext, 500);
+    }
+}
 /*
 app.MapGet("/books", async (BookService service) => Results.Ok(await service.GetAllBooks()));
 app.MapGet("/books/{id:int}", async (int id, BookService service) =>

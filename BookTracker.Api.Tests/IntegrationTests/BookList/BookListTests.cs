@@ -1,6 +1,7 @@
 ﻿using BookTracker.Api.Application;
 using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Domain;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http.Json;
@@ -29,6 +30,7 @@ public class BookListTests : IntegrationTest
 
         var response = await Client.GetAsync("/books");
         //var books = await response.Content.ReadFromJsonAsync<List<BookInfo>>();
+       // var book = Reader.Query(context => context.Find<Book>(created.Id));
         var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
