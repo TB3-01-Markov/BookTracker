@@ -15,14 +15,11 @@ public class AuthorNameTests
     [Fact]
     public void AuthorNameTrimsValue()
     {
-        // Implementeer hier deze test
         var author = new AuthorName("  Frank Herbert  ");
         Assert.Equal("Frank Herbert", author.Value);
 
     }
 
-    // Voeg hier de test 'AuthorNameRejectsWhitespace' toe
-    // exception.Message = "Author is required."
     [Fact]
     public void AuthorNameRejectsWhitespace()
     {
@@ -30,8 +27,6 @@ public class AuthorNameTests
         Assert.Equal("Author is required.", exception.Message);
     }
 
-    // Voeg hier de test 'AuthorNameRejectsNameLongerThan100Characters' toe
-    // exception.Message = "Author cannot be longer than 100 characters."
     [Fact]
     public void AuthorNameRejectsNameLongerThan100Characters()
     {

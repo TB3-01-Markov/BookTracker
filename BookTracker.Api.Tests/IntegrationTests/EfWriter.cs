@@ -10,7 +10,6 @@ public class EfWriter(IServiceProvider services)
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         seed(db);
-        //writer.Seed(db =>{db.Books.Add(new Book{Title = "Dune",Author = "Frank Herbert",Year = 1965});});
         db.SaveChanges();
     }
 }

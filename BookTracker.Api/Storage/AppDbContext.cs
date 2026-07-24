@@ -17,7 +17,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
                     value => new BookTitle(value))
                 .HasMaxLength(BookTitle.MaxLength);
 
-            // voeg hier de configuratie voor AuthorName toe
             book.Property(b => b.Author)
                 .HasConversion(
                     author => author.Value,

@@ -1,7 +1,6 @@
 ﻿using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Domain;
-//using QuickPulse.Show;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -9,13 +8,9 @@ namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
 
 public class GetBookByIdTests: IntegrationTest
 {
-    //private readonly CustomWebApplicationFactory factory = new();
-
     [Fact]
     public async Task GetBookByIdReturnsBook()
     {
-      //  var writer = factory.GetWriter();
-
         Writer.Seed(db =>
         {
             db.Books.Add(
@@ -27,12 +22,9 @@ public class GetBookByIdTests: IntegrationTest
                 });
         });
 
-      //  var client = factory.CreateClient();
-
         var response = await Client.GetAsync("/books/1");
         var book = await response.ReadJsonAs<BookDetails>(HttpStatusCode.OK);
-        //var book = await response.Content.ReadFromJsonAsync<BookDetails>();
-
+      
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(book);
         Assert.Equal(1, book.Id);
@@ -44,9 +36,6 @@ public class GetBookByIdTests: IntegrationTest
     [Fact]
     public async Task GetBookByIdReturnsNotFoundWhenBookDoesNotExist()
     {
-        // Implementeer deze test
-        //var client = factory.CreateClient();
-
         var response = await Client.GetAsync("/books/9999");
 
         await response.ShouldHaveStatusCode(HttpStatusCode.NotFound);
