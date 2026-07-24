@@ -1,4 +1,5 @@
-﻿using BookTracker.Api.Application.BookList;
+﻿using BookTracker.Api.Application;
+using BookTracker.Api.Application.BookList;
 using BookTracker.Api.Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
@@ -27,14 +28,94 @@ public class BookListTests
         var client = factory.CreateClient();
 
         var response = await client.GetAsync("/books");
-        var books = await response.Content.ReadFromJsonAsync<List<BookInfo>>();
+        //var books = await response.Content.ReadFromJsonAsync<List<BookInfo>>();
+        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        Assert.NotNull(books);
+        //Assert.NotNull(books);
 
-        var bookInfo = Assert.Single(books);
+        //var bookInfo = Assert.Single(books);
+        //Assert.Equal("Cannery Row", bookInfo.Title);
+        //Assert.Equal("John Steinbeck", bookInfo.Author);
+
+        Assert.NotNull(result);
+
+        var bookInfo = Assert.Single(result.Items);
+
         Assert.Equal("Cannery Row", bookInfo.Title);
         Assert.Equal("John Steinbeck", bookInfo.Author);
+        Assert.Equal(1, result.Page);
+        Assert.Equal(10, result.PageSize);
+        Assert.Equal(1, result.TotalItems);
+        Assert.Equal(1, result.TotalPages);
+    }
+
+    [Fact]
+    public async Task GetBooksReturnsRequestedPage()
+    {
+        var writer = factory.GetWriter();
+        writer.Seed(db =>
+        {
+            db.Books.AddRange(
+                new Book
+                {
+                    Title = new BookTitle("Book 1"),
+                    Author = new AuthorName("Author 1"),
+                    Year = 2001
+                },
+                new Book
+                {
+                    Title = new BookTitle("Book 2"),
+                    Author = new AuthorName("Author 2"),
+                    Year = 2002
+                },
+                new Book
+                {
+                    Title = new BookTitle("Book 3"),
+                    Author = new AuthorName("Author 3"),
+                    Year = 2003
+                });
+        });
+
+        var client = factory.CreateClient();
+
+        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=2&pageSize=1");
+
+        Assert.NotNull(result);
+
+        var book = Assert.Single(result.Items);
+
+        Assert.Equal("Book 2", book.Title);
+        Assert.Equal(2, result.Page);
+        Assert.Equal(1, result.PageSize);
+        Assert.Equal(3, result.TotalItems);
+        Assert.Equal(3, result.TotalPages);
+    }
+
+    [Fact]
+    public async Task GetBooksReturnsEmptyItemsWhenPageIsTooHigh()
+    {
+        var writer = factory.GetWriter();
+        writer.Seed(db =>
+        {
+            db.Books.Add(
+                new Book
+                {
+                    Title = new BookTitle("Book 1"),
+                    Author = new AuthorName("Author 1"),
+                    Year = 2001
+                });
+        });
+
+        var client = factory.CreateClient();
+        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=99&pageSize=10");
+
+        Assert.NotNull(result);
+        Assert.Empty(result.Items);
+        Assert.Equal(99, result.Page);
+        Assert.Equal(10, result.PageSize);
+        Assert.Equal(1, result.TotalItems);
+        Assert.Equal(1, result.TotalPages);
     }
 }

@@ -43,3 +43,9 @@ Content-Type: application/json
   "author": "Unknown Author",
   "year": 2000
 }
+
+### Get Books Page 1
+GET {{BookTracker.Api_HostAddress}}/books?page=1&pageSize=10
+
+### Get Books Page 2
+GET {{BookTracker.Api_HostAddress}}/books?page=2&pageSize=10
