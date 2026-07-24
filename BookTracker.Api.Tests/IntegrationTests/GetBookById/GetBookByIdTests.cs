@@ -7,16 +7,16 @@ using System.Net.Http.Json;
 
 namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
 
-public class GetBookByIdTests
+public class GetBookByIdTests: IntegrationTest
 {
-    private readonly CustomWebApplicationFactory factory = new();
+    //private readonly CustomWebApplicationFactory factory = new();
 
     [Fact]
     public async Task GetBookByIdReturnsBook()
     {
-        var writer = factory.GetWriter();
+      //  var writer = factory.GetWriter();
 
-        writer.Seed(db =>
+        Writer.Seed(db =>
         {
             db.Books.Add(
                 new Book
@@ -27,10 +27,11 @@ public class GetBookByIdTests
                 });
         });
 
-        var client = factory.CreateClient();
+      //  var client = factory.CreateClient();
 
-        var response = await client.GetAsync("/books/1");
-        var book = await response.Content.ReadFromJsonAsync<BookDetails>();
+        var response = await Client.GetAsync("/books/1");
+        var book = await response.ReadJsonAs<BookDetails>(HttpStatusCode.OK);
+        //var book = await response.Content.ReadFromJsonAsync<BookDetails>();
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(book);
@@ -44,10 +45,12 @@ public class GetBookByIdTests
     public async Task GetBookByIdReturnsNotFoundWhenBookDoesNotExist()
     {
         // Implementeer deze test
-        var client = factory.CreateClient();
+        //var client = factory.CreateClient();
 
-        var response = await client.GetAsync("/books/9999");
-        
+        var response = await Client.GetAsync("/books/9999");
+
+        await response.ShouldHaveStatusCode(HttpStatusCode.NotFound);
+
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

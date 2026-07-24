@@ -23,6 +23,7 @@ public class AuthorNameTests
 
     // Voeg hier de test 'AuthorNameRejectsWhitespace' toe
     // exception.Message = "Author is required."
+    [Fact]
     public void AuthorNameRejectsWhitespace()
     {
         var exception = Assert.Throws<DomainException>(() => new AuthorName("   "));
@@ -31,12 +32,13 @@ public class AuthorNameTests
 
     // Voeg hier de test 'AuthorNameRejectsNameLongerThan100Characters' toe
     // exception.Message = "Author cannot be longer than 100 characters."
+    [Fact]
     public void AuthorNameRejectsNameLongerThan100Characters()
     {
         var tooLong = new string('x', 101);
 
         var exception = Assert.Throws<DomainException>(() => new AuthorName(tooLong));
 
-        Assert.Equal("Author Name cannot be longer than 100 characters.", exception.Message);
+        Assert.Equal("Author cannot be longer than 100 characters.", exception.Message);
     }
 }

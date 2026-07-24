@@ -31,7 +31,8 @@ public class BookListTests : IntegrationTest
         var response = await Client.GetAsync("/books");
         //var books = await response.Content.ReadFromJsonAsync<List<BookInfo>>();
        // var book = Reader.Query(context => context.Find<Book>(created.Id));
-        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
+       // var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
+        var result = await response.ReadJsonAs<PagedResult<BookInfo>>(HttpStatusCode.OK);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -80,9 +81,10 @@ public class BookListTests : IntegrationTest
                 });
         });
 
-       // var client = factory.CreateClient();
-
-        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=2&pageSize=1");
+        // var client = factory.CreateClient();
+        var response = await Client.GetAsync("/books?page=2&pageSize=1");
+        var result = await response.ReadJsonAs<PagedResult<BookInfo>>(HttpStatusCode.OK);
+        //var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=2&pageSize=1");
 
         Assert.NotNull(result);
 
@@ -111,7 +113,9 @@ public class BookListTests : IntegrationTest
         });
 
         //var client = factory.CreateClient();
-        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=99&pageSize=10");
+        var response = await Client.GetAsync("/books?page=99&pageSize=10");
+        var result = await response.ReadJsonAs<PagedResult<BookInfo>>(HttpStatusCode.OK);
+        //var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=99&pageSize=10");
 
         Assert.NotNull(result);
         Assert.Empty(result.Items);

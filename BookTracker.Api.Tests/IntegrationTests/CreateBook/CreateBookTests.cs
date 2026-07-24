@@ -25,7 +25,8 @@ public class CreateBookTests : IntegrationTest
         //var client = factory.CreateClient();
         //var response = await client.PostAsJsonAsync("/books", request);
         var response = await Client.PostAsJsonAsync("/books", request);
-        var created = await response.Content.ReadFromJsonAsync<CreateBookResponse>();
+        var created = await response.ReadJsonAs<CreateBookResponse>(HttpStatusCode.Created);
+       // var created = await response.Content.ReadFromJsonAsync<CreateBookResponse>();
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         Assert.NotNull(created);
@@ -56,6 +57,7 @@ public class CreateBookTests : IntegrationTest
             };
 
         var response = await Client.PostAsJsonAsync("/books", request);
+        await response.ShouldHaveStatusCode(HttpStatusCode.BadRequest);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }

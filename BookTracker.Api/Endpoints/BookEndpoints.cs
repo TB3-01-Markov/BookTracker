@@ -5,7 +5,6 @@ using BookTracker.Api.Application.GetBookById;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Application.DeleteBook; 
 using BookTracker.Api.Domain;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BookTracker.Api.Endpoints;
 
@@ -100,9 +99,16 @@ public static class BookEndpoints
     }*/
     public static async Task<IResult> UpdateBook(int id, UpdateBookRequest request, UpdateBookCommandHandler handler)
     {
-        var updated = await handler.Execute(id, request);
-        if (!updated) return Results.NotFound();
-        return Results.NoContent();
+        try
+        {
+            var updated = await handler.Execute(id, request);
+            if (!updated) return Results.NotFound();
+            return Results.NoContent();
+        }
+        catch (DomainException exception)
+        {
+            return Results.BadRequest(new { error = exception.Message });
+        }
     }
     /*public static async Task<IResult> DeleteBook(int id, BookService service)
     {
