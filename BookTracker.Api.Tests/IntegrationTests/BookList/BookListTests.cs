@@ -7,16 +7,16 @@ using System.Net.Http.Json;
 
 namespace BookTracker.Api.Tests.IntegrationTests.BookList;
 
-public class BookListTests
+public class BookListTests : IntegrationTest
 {
     //private readonly WebApplicationFactory<Program> factory = new();
-    private readonly CustomWebApplicationFactory factory = new();
+    //private readonly CustomWebApplicationFactory factory = new();
     
     [Fact]
     public async Task GetBooksReturnsBooks()
     {
-        var writer = factory.GetWriter();
-        writer.Seed(db => db.Books.Add(
+      //  var writer = factory.GetWriter();
+        Writer.Seed(db => db.Books.Add(
             new Book
             {
                 Title = new BookTitle("Cannery Row"),
@@ -25,11 +25,11 @@ public class BookListTests
             }
         ));
 
-        var client = factory.CreateClient();
+       // var client = factory.CreateClient();
 
-        var response = await client.GetAsync("/books");
+        var response = await Client.GetAsync("/books");
         //var books = await response.Content.ReadFromJsonAsync<List<BookInfo>>();
-        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
+        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -54,8 +54,8 @@ public class BookListTests
     [Fact]
     public async Task GetBooksReturnsRequestedPage()
     {
-        var writer = factory.GetWriter();
-        writer.Seed(db =>
+        //var writer = factory.GetWriter();
+        Writer.Seed(db =>
         {
             db.Books.AddRange(
                 new Book
@@ -78,9 +78,9 @@ public class BookListTests
                 });
         });
 
-        var client = factory.CreateClient();
+       // var client = factory.CreateClient();
 
-        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=2&pageSize=1");
+        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=2&pageSize=1");
 
         Assert.NotNull(result);
 
@@ -96,8 +96,8 @@ public class BookListTests
     [Fact]
     public async Task GetBooksReturnsEmptyItemsWhenPageIsTooHigh()
     {
-        var writer = factory.GetWriter();
-        writer.Seed(db =>
+        //var writer = factory.GetWriter();
+        Writer.Seed(db =>
         {
             db.Books.Add(
                 new Book
@@ -108,8 +108,8 @@ public class BookListTests
                 });
         });
 
-        var client = factory.CreateClient();
-        var result = await client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=99&pageSize=10");
+        //var client = factory.CreateClient();
+        var result = await Client.GetFromJsonAsync<PagedResult<BookInfo>>("/books?page=99&pageSize=10");
 
         Assert.NotNull(result);
         Assert.Empty(result.Items);
