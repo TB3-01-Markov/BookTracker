@@ -1,4 +1,4 @@
-﻿using BookTracker.Api.Application.GetBookById;
+﻿using BookTracker.Api.Application.GetBookDetails;
 using BookTracker.Api.Application.UpdateBook;
 using BookTracker.Api.Domain;
 using System.Net;
@@ -23,7 +23,7 @@ public class GetBookByIdTests: IntegrationTest
         });
 
         var response = await Client.GetAsync("/books/1");
-        var book = await response.ReadJsonAs<BookDetails>(HttpStatusCode.OK);
+        var book = await response.ReadJsonAs<GetBookDetailsResponse>(HttpStatusCode.OK);
       
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(book);
