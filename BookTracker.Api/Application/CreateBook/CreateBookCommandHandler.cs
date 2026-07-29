@@ -1,7 +1,7 @@
 ﻿using BookTracker.Api.Domain;
 using BookTracker.Api.Storage;
 namespace BookTracker.Api.Application.CreateBook;
-public class CreateBookCommandHandler(IBookRepository bookRepository)
+public class CreateBookCommandHandler(IBookRepository bookRepository) : IHandler
 {
     public async Task<CreateBookResponse> Execute(CreateBookRequest request)
     {
