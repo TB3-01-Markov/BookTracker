@@ -8,7 +8,7 @@ namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
 public class GetBookByIdTests: IntegrationTest
 {
     [Fact]
-    public async Task GetBookByIdReturnsBook()
+    public async Task GetBookDetailsReturnsBookDetail()
     {
         Writer.Seed(db =>
         {
@@ -33,7 +33,7 @@ public class GetBookByIdTests: IntegrationTest
     }
 
     [Fact]
-    public async Task GetBookByIdReturnsNotFoundWhenBookDoesNotExist()
+    public async Task GetBookDetailsReturnsNotFoundWhenBookDoesNotExist()
     {
         var response = await Client.GetAsync("/books/9999");
 
@@ -44,23 +44,23 @@ public class GetBookByIdTests: IntegrationTest
 }
 /*
 
-GetBooksReturnsBooks -> GetBookSummariesReturnsBookSummaries
+GetBookSummariesReturnsBookSummaries -> GetBookSummariesReturnsBookSummaries
 
-GetBooksReturnsRequestedPage
+GetBookSummariesReturnsRequestedPage
   -> GetBookSummariesReturnsRequestedPage
 
-GetBooksCanSearchByTitle
+GetBookSummariesCanSearchByTitle
   -> GetBookSummariesCanSearchByTitle
 
-GetBooksCanSearchByAuthor
+GetBookSummariesCanSearchByAuthor
   -> GetBookSummariesCanSearchByAuthor
 
-GetBooksAppliesPagingAfterSearch
+GetBookSummariesApplyPagingAfterSearch
   -> GetBookSummariesApplyPagingAfterSearch
 
-GetBookByIdReturnsBook
+GetBookDetailsReturnsBookDetail
   -> GetBookDetailsReturnsBookDetail
 
-GetBookByIdReturnsNotFoundWhenBookDoesNotExist
+GetBookDetailsReturnsNotFoundWhenBookDoesNotExist
   -> GetBookDetailsReturnsNotFoundWhenBookDoesNotExist
 */

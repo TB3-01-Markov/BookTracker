@@ -12,7 +12,7 @@ namespace BookTracker.Api.Tests.IntegrationTests.BookList;
 public class BookListTests : IntegrationTest
 {
     [Fact]
-    public async Task GetBooksReturnsBooks()
+    public async Task GetBookSummariesReturnsBookSummaries()
     {
         Writer.Seed(db => db.Books.Add(
             new Book
@@ -41,7 +41,7 @@ public class BookListTests : IntegrationTest
     }
 
     [Fact]
-    public async Task GetBooksReturnsRequestedPage()
+    public async Task GetBookSummariesReturnsRequestedPage()
     {
         Writer.Seed(db =>
         {
@@ -106,7 +106,7 @@ public class BookListTests : IntegrationTest
     }
 
     [Fact]
-    public async Task GetBooksCanSearchByTitle()
+    public async Task GetBookSummariesCanSearchByTitle()
     {
         Writer.Seed(db =>
         {
@@ -138,7 +138,7 @@ public class BookListTests : IntegrationTest
     }
 
     [Fact]
-    public async Task GetBooksAppliesPagingAfterSearch()
+    public async Task GetBookSummariesApplyPagingAfterSearch()
     {
         Writer.Seed(db =>
         {
