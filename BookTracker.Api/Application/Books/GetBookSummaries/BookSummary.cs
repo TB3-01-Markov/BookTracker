@@ -1,9 +1,8 @@
-﻿namespace BookTracker.Api.Application.CreateBook;
+﻿namespace BookTracker.Api.Application.Books.GetBookSummaries;
 
-public class CreateBookResponse
+public class BookSummary
 {
     public int Id { get; set; }
     public required string Title { get; set; }
     public required string Author { get; set; }
-    public int Year { get; set; }
 }

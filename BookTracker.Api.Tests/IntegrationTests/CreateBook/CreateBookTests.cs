@@ -1,5 +1,5 @@
-﻿using BookTracker.Api.Application.CreateBook;
-using BookTracker.Api.Domain;
+﻿using BookTracker.Api.Application.Books.CreateBook;
+using BookTracker.Api.Domain.Books;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http.Json;

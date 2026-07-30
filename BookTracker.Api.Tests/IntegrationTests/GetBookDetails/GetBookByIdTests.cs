@@ -1,8 +1,7 @@
-﻿using BookTracker.Api.Application.GetBookDetails;
-using BookTracker.Api.Application.UpdateBook;
-using BookTracker.Api.Domain;
+﻿using BookTracker.Api.Application.Books.GetBookDetails;
+using BookTracker.Api.Domain.Books;
 using System.Net;
-using System.Net.Http.Json;
+
 
 namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
 
@@ -43,3 +42,25 @@ public class GetBookByIdTests: IntegrationTest
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
+/*
+
+GetBooksReturnsBooks -> GetBookSummariesReturnsBookSummaries
+
+GetBooksReturnsRequestedPage
+  -> GetBookSummariesReturnsRequestedPage
+
+GetBooksCanSearchByTitle
+  -> GetBookSummariesCanSearchByTitle
+
+GetBooksCanSearchByAuthor
+  -> GetBookSummariesCanSearchByAuthor
+
+GetBooksAppliesPagingAfterSearch
+  -> GetBookSummariesApplyPagingAfterSearch
+
+GetBookByIdReturnsBook
+  -> GetBookDetailsReturnsBookDetail
+
+GetBookByIdReturnsNotFoundWhenBookDoesNotExist
+  -> GetBookDetailsReturnsNotFoundWhenBookDoesNotExist
+*/

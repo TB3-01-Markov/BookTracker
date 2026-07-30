@@ -25,7 +25,7 @@ using BookTracker.Api.Application.CreateBook;
 using BookTracker.Api.Application.DeleteBook;
 using BookTracker.Api.Application.GetBookDetails;
 using BookTracker.Api.Application.GetBookSummaries;
-using BookTracker.Api.Application.UpdateBook;
+using BookTracker.Api.Application.Books.UpdateBook;
 using BookTracker.Api.Endpoints;
 using BookTracker.Api.Seeding;
 using BookTracker.Api.Storage;

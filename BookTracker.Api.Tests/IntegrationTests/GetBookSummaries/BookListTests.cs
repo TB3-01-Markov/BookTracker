@@ -1,6 +1,7 @@
 ﻿using BookTracker.Api.Application;
-using BookTracker.Api.Application.GetBookSummaries;
+using BookTracker.Api.Application.Books.GetBookSummaries;
 using BookTracker.Api.Domain;
+using BookTracker.Api.Domain.Books;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
