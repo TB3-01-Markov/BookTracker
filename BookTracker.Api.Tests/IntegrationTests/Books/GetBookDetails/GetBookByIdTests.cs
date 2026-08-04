@@ -3,7 +3,7 @@ using BookTracker.Api.Domain.Books;
 using System.Net;
 
 
-namespace BookTracker.Api.Tests.IntegrationTests.GetBookById;
+namespace BookTracker.Api.Tests.IntegrationTests.Books.GetBookDetails;
 
 public class GetBookByIdTests: IntegrationTest
 {

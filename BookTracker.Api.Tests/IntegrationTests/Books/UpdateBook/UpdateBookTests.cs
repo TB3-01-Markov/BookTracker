@@ -4,7 +4,7 @@ using BookTracker.Api.Application.Books.UpdateBook;
 using BookTracker.Api.Domain;
 using BookTracker.Api.Domain.Books;
 
-namespace BookTracker.Api.Tests.IntegrationTests.UpdateBook;
+namespace BookTracker.Api.Tests.IntegrationTests.Books.UpdateBook;
 
 public class UpdateBookTests: IntegrationTest
 {

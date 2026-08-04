@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http.Json;
 
-namespace BookTracker.Api.Tests.IntegrationTests.BookList;
+namespace BookTracker.Api.Tests.IntegrationTests.Books.GetBookSummaries;
 
 public class BookListTests : IntegrationTest
 {
