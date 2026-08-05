@@ -13,6 +13,7 @@ public class MemberEmailTests
 
         Assert.Equal("membermail@gmail.com", mail.Value);
     }
+    /*
     [Fact]
     public void MemberEmailSymbolContain()
     {
@@ -20,6 +21,12 @@ public class MemberEmailTests
         var mail2 = new MemberEmail("membermailgmail.com");
         Assert.True(mail1.Value.Contains('@'));
         Assert.False(mail2.Value.Contains('@'));
+    }
+    */
+    [Fact]
+    public void MemberEmailRejectsValueWithoutAtSymbol(){
+        var exception = Assert.Throws<DomainException>(() => new MemberEmail("membermailgmail.com"));
+        Assert.Equal("Email must contain the @ symbol", exception.Message);
     }
     [Fact]
     public void MemberEmailTrimsValue()
